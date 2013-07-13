@@ -45,7 +45,7 @@ describe TicTacToe::Grid do
       grid[0,1] = :x
       grid[0,2] = :o
       grid[1,1] = :o
-      grid[2,0] = :x
+      grid[2,0] = :o
 
       grid
     end

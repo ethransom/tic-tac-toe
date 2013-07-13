@@ -58,9 +58,6 @@ module TicTacToe
       self # Chainability! Yay!
     end
 
-    def won
-    end
-
     def won?
       [:x, :o].each do |player|
         possible_wins.each do |combination|
@@ -117,10 +114,8 @@ module TicTacToe
     def moves
       answers = []
 
-      3.times do |i|
-        3.times do |j|
-          answers.push [i,j] if @table[i][j] == :blank
-        end
+      each do |cell, i, j|
+        answers.push [i,j] if cell == :blank
       end
 
       answers
@@ -130,7 +125,7 @@ module TicTacToe
       @table.inspect
     end
 
-  # private
+  private
     # Private for now. Probably will expose later.
     def collect
       array = []
