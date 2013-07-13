@@ -1,22 +1,18 @@
-require_relative "lib/game.rb"
-require_relative "lib/grid.rb"
-require_relative "lib/player.rb"
-require_relative "lib/human_player.rb"
-require_relative "lib/smart_player.rb"
-require_relative "lib/learning_player.rb"
-require_relative "lib/move.rb"
+# require "lib/tic_tac_toe"
+$:.push File.expand_path("../lib", __FILE__)
+require 'tic_tac_toe'
 
 include TicTacToe
 
-joshua = LearningPlayer.new :o
+# joshua = LearningPlayer.new :o
 
-100.times do
-  game = Game.new RandomPlayer.new(:x), joshua
-  game.play!
-  joshua.end_game game.winner == joshua
-end
+# 100.times do
+#   game = Game.new RandomPlayer.new(:x), joshua
+#   game.play!
+#   joshua.end_game game.winner == joshua
+# end
 
-
+Game.new(HumanPlayer.new(:x), SmartPlayer.new(:o)).play!
 
 # test `neighbor_coords`
 # grid = Grid.new
