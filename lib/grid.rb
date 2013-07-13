@@ -90,24 +90,22 @@ module TicTacToe
     end
 
     def pretty_print
-      3.times do |i|
-        print "|"
-        3.times do |j|
-          print (
-            case @table[i][j]
-            when :blank
-              " "
-            when :x
-              "X"
-            when :o
-              "O"
-            else
-              "?"
-            end
-          )
-        end
-        print "|\n"
-      end
+      each do |cell, i, j|
+       print "|" if j == 0 # beginning of new line
+
+       case cell 
+       when :blank
+         " "
+       when :x
+         "X"
+       when :o
+         "O"
+       else
+         "?"
+       end
+
+       print "|\n" if j == 2 # end of line
+     end
     end
 
     # Returns an array of possible moves, stored as 2 item arrays.
