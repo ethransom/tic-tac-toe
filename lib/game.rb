@@ -19,16 +19,16 @@ module TicTacToe
       until over?
         @players.each do |player|
           until @grid.apply(player.move(@grid), player.symbol) # TODO: Players be in charge of updating grid.
-            puts "That was not a valid move"
+            # puts "That was not a valid move"
           end
 
           # @grid.pretty_print
 
           if over?
             if @grid.stalemate?
-              puts "Game ends in a draw..."
+              # puts "Game ends in a draw..."
             elsif @grid.won?
-              puts "#{player.class} has won the game!"
+              # puts "#{player.class} has won the game!"
               @winner = player
             end
 

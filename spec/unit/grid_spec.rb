@@ -1,4 +1,3 @@
-require_relative '../../lib/grid.rb'
 require 'spec_helper'
 
 describe TicTacToe::Grid do
@@ -14,6 +13,31 @@ describe TicTacToe::Grid do
       3.times do |j|
         grid[i,j].should eq :blank
       end
+    end
+  end
+
+  describe "#clone" do
+    it "clones the grid, including table data" do
+      new_grid = grid.clone
+
+      new_grid.should eq grid
+    end
+  end
+
+  describe "#at" do
+    it "accepts an array, returning the same cell as #[]" do
+      grid.at([1,2]).should eq grid[1,2]
+
+      grid[1,2] = :x
+
+      grid.at([1,2]).should eq :x
+    end
+  end
+
+  describe "#inspect" do
+    it "inspects the internal arrays" do
+      grid[1,1] = :o
+      grid.inspect.should eq "[[:blank, :blank, :blank], [:blank, :o, :blank], [:blank, :blank, :blank]]"
     end
   end
 
@@ -37,7 +61,7 @@ describe TicTacToe::Grid do
   end
 
   describe "#won?" do
-    let (:endgame_grid) do
+    let (:won_game) do
       # |XXO|
       # | O |
       # |O  |
@@ -50,9 +74,24 @@ describe TicTacToe::Grid do
       grid
     end
 
-    # TODO: Not very through. Test more cases.
+    let (:unwon_game) do
+      # |  O|
+      # | XO|
+      # |X  |
+      grid[0,2] = :o
+      grid[1,1] = :x
+      grid[1,2] = :o
+      grid[2,1] = :x
+
+      grid
+    end
+
     it "detects when a player has won" do
-      endgame_grid.won?.should be_true
+      won_game.won?.should be_true
+    end
+
+    it "detects when a player has not won" do
+      unwon_game.won?.should be_false
     end
   end
 

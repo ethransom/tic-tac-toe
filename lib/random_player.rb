@@ -4,7 +4,7 @@ module TicTacToe
   class RandomPlayer < Player
     def move grid
       move = grid.moves.sample
-      puts "#{@symbol.to_s} moves to #{move.inspect}"
+      # puts "#{@symbol.to_s} moves to #{move.inspect}"
       move
     end
   end

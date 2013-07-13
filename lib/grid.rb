@@ -123,6 +123,12 @@ module TicTacToe
       @table.inspect
     end
 
+    def self.from_array(array)
+      grid = Grid.new
+
+      grid.each! { array.shift }
+    end
+
   private
     # Private for now. Probably will expose later.
     def collect
