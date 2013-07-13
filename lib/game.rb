@@ -18,9 +18,9 @@ module TicTacToe
       # puts "Playing..."
       until over?
         @players.each do |player|
-          until @grid.apply(player.move(@grid), player.symbol) # TODO: Players be in charge of updating grid.
-            # puts "That was not a valid move"
-          end
+          move = player.move!(@grid)
+          
+          # puts move
 
           # @grid.pretty_print
 

@@ -12,7 +12,7 @@ module TicTacToe
       super
     end
 
-    def move grid
+    def move!(grid)
       moves = grid.moves.shuffle!
 
       ranked_moves = moves.collect do |move|
@@ -25,6 +25,8 @@ module TicTacToe
 
       # puts ranked_moves.inspect unless @recursive
       move = ranked_moves.last[:move]
+
+      raise "Tried to move to taken square" unless grid.apply move, @symbol
 
       # puts "#{@symbol.to_s} moves to #{move.inspect}" unless @recursive
       move
@@ -48,7 +50,7 @@ module TicTacToe
       # Hopefully this will allow the blocking move to "float" to the top.
       simulated_other_player = SmartPlayer.new(([:x, :o] - [@symbol]).first) # AIception!
       simulated_other_player.recursive = true
-      forecast.apply simulated_other_player.move(forecast), simulated_other_player.symbol unless @recursive || forecast.stalemate? # this is crap code. fix API
+      simulated_other_player.move!(forecast) unless @recursive || forecast.stalemate? # this is crap code. fix API
       if forecast.won? 
         rank -= 8_000 # Less than the win points. An immediate win is better than a failure to block.
         # puts "#{move} would have allowed opponent to win next turn" unless @recursive

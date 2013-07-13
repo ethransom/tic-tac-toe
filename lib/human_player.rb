@@ -1,7 +1,7 @@
 module TicTacToe
   # `HumanPlayer` will ask a human through the console for its move.
   class HumanPlayer < Player
-    def move grid
+    def move! grid
       move = grid.moves.sample
 
       puts "What is #{@symbol.to_s}'s move? Example: '1,2'"
@@ -12,6 +12,12 @@ module TicTacToe
       	next if input.length != 2
 
       	move = input.collect {|s| s.to_i }
+        
+        unless grid.apply move, @symbol
+          puts "That was not a valid move"
+          next
+        end
+
       	break
       end
 

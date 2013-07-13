@@ -10,7 +10,7 @@ describe SmartPlayer do
   describe "algorithm" do
     def move grid, symbol=:x
       player = SmartPlayer.new symbol
-      grid.apply(player.move(grid), player.symbol)
+      player.move!(grid)
       grid
     end
 
