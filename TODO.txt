@@ -1,0 +1,2 @@
+- Control logging better. Have `Game` handle it? Write a logger class? (<- :P)
+- Rewrite Game api. Make it more testable.
