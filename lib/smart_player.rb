@@ -42,16 +42,13 @@ module TicTacToe
       rank += 9_000 if forecast.won?
 
       # corners are worth 20, edges 10
-      rank += ((move[0] - 1).abs + (move[1] - 1).abs) * 10
+      rank += perimeter_rank move
       # center is worth 30
-      rank += 30 if move[0] == 1 && move[1] == 1
+      rank += 30 if center? move
 
       # Moves that allow the player to win next round loose lots o' points.
       # Hopefully this will allow the blocking move to "float" to the top.
-      simulated_other_player = SmartPlayer.new(([:x, :o] - [@symbol]).first) # AIception!
-      simulated_other_player.recursive = true
-      simulated_other_player.move!(forecast) unless @recursive || forecast.stalemate? # this is crap code. fix API
-      if forecast.won? 
+      if loose_next_round(forecast)
         rank -= 8_000 # Less than the win points. An immediate win is better than a failure to block.
         # puts "#{move} would have allowed opponent to win next turn" unless @recursive
       else
@@ -59,6 +56,21 @@ module TicTacToe
       end
 
       rank
+    end
+
+    def loose_next_round forecast
+      other_player = SmartPlayer.new(([:x, :o] - [@symbol]).first) # AIception!
+      other_player.recursive = true
+      other_player.move!(forecast) unless @recursive || forecast.stalemate?
+      forecast.won?
+    end
+
+    def center? move
+      move[0] == 1 && move[1] == 1
+    end
+
+    def perimeter_rank move
+      ((move[0] - 1).abs + (move[1] - 1).abs) * 10
     end
   end
 end
